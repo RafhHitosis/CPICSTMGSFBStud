@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:title="Grades"
+        android:icon="@drawable/baseline_grading_24"
+        android:fontFamily="@font/roboto_regular" />
+
+    <item
+        android:id="@+id/reserve"
+        android:title="None"
+        android:icon="@drawable/baseline_upcoming_24"
+        android:fontFamily="@font/roboto_regular" />
+
+    <item
+        android:id="@+id/fab"
+        android:title=""
+        android:enabled="false" />
+
+    <item
+        android:id="@+id/notifications"
+        android:title="Notif"
+        android:icon="@drawable/ic_notifications"
+        android:fontFamily="@font/roboto_regular" />
+
+    <item
+        android:id="@+id/profile"
+        android:title="Profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:fontFamily="@font/roboto_regular" />
+</menu>

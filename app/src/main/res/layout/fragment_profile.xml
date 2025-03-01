@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/bggradient"
+    android:padding="0dp">
+
+    <!-- Container for Profile Section with White Background -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_header"
+        android:padding="16dp"
+        android:elevation="4dp"
+        android:gravity="center_horizontal">
+
+        <!-- Profile Label -->
+        <TextView
+            android:id="@+id/profileLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PROFILE"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@android:color/black"
+            android:gravity="center" />
+
+        <!-- Profile Image -->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImageView"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_background"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/ic_baseline_person_24" />
+
+        <!-- Name TextView -->
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_marginTop="12dp"
+            android:text="Name"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@drawable/profile_bg_round"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:elevation="7dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <RelativeLayout
+            android:id="@+id/changePass"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="13dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/changePassIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/login_password_24"
+                android:background="@drawable/button_profile_round"
+                android:padding="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_centerVertical="true"
+                android:text="Change Passowrd"
+                android:fontFamily="@font/roboto_bold"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:textColor="@color/green"
+                android:layout_toEndOf="@id/changePassIcon" />
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/baseline_arrow_forward_ios_24"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/logoutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/logoutIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:backgroundTint="#EE4B2B"
+                android:src="@drawable/baseline_logout_24"
+                android:background="@drawable/button_profile_round"
+                android:padding="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_centerVertical="true"
+                android:text="Logout"
+                android:fontFamily="@font/roboto_bold"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:textColor="@color/green"
+                android:layout_toEndOf="@id/logoutIcon" />
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/baseline_arrow_forward_ios_24"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <!-- CardView for Personal Info -->
+    <LinearLayout
+        android:background="@drawable/profile_bg_round"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:padding="16dp"
+        android:elevation="7dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PERSONAL INFO"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_marginBottom="13dp"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/studentNumberTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student Number"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/courseTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Course"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/cardAddressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Address"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

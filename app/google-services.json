@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "619240877167",
+    "firebase_url": "https://icstmgsdb-default-rtdb.firebaseio.com",
+    "project_id": "icstmgsdb",
+    "storage_bucket": "icstmgsdb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:619240877167:android:5d065df4515cfb9457b19a",
+        "android_client_info": {
+          "package_name": "com.example.icstmgs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDClgmZrQ34W1v01FKh1kgKKvdVSQPHE6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:619240877167:android:44404cd86a59b69857b19a",
+        "android_client_info": {
+          "package_name": "com.example.icstmgsfb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDClgmZrQ34W1v01FKh1kgKKvdVSQPHE6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:619240877167:android:64e07684f652a18257b19a",
+        "android_client_info": {
+          "package_name": "com.example.icstmgsfbstud"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDClgmZrQ34W1v01FKh1kgKKvdVSQPHE6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
