@@ -1,3 +1,5 @@
+// Updated MainActivity.java with animation implementations
+
 package com.example.icstmgsfbstud;
 
 import android.Manifest;
@@ -13,6 +15,10 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -27,7 +33,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.icstmgsfbstud.databinding.ActivityMainBinding;
+import com.example.icstmgsfbstud.helpers.BottomNavAnimationHelper;
 import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NotificationFragm
     private Map<String, String> lastKnownGrades = new HashMap<>();
 
     private BroadcastReceiver notificationReceiver;
+    private int currentSelectedItem = 0; // Track the current selected item
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -88,18 +99,49 @@ public class MainActivity extends AppCompatActivity implements NotificationFragm
         replaceFragment(new viewGradeFragment());
         binding.bottomNavigationView.setBackground(null);
 
+        // Apply bottom app bar enter animation
+        BottomNavAnimationHelper.applyEnterAnimation(this, binding.bottomAppBar);
+
+        // Apply layout animation to the bottom navigation
+        binding.bottomNavigationView.setLayoutAnimation(
+                AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_from_bottom));
+
+        // Apply state animations to the navigation items
+        BottomNavAnimationHelper.applyNavItemStateAnimator(binding.bottomNavigationView);
+
+        // Set custom item color transition
+        binding.bottomNavigationView.setItemIconTintList(
+                ContextCompat.getColorStateList(this, R.color.nav_item_color_transition));
+        binding.bottomNavigationView.setItemTextColor(
+                ContextCompat.getColorStateList(this, R.color.nav_item_color_transition));
+
+        // Apply initial elevation
+        binding.bottomAppBar.setElevation(0f);
+
         // Sync badge count with stored notifications when the app starts
         updateNotificationBadge();
 
-        // Set up bottom navigation item selection listener
+        // Setup navigation item click listener with animations
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            int previousItem = currentSelectedItem;
+            currentSelectedItem = item.getItemId();
+
+            // Apply elevation animation
+            BottomNavAnimationHelper.applyElevationAnimation(binding.bottomAppBar, 0f, 8f);
+
+            // Create ripple effect on click
+            applyRippleToMenuItem(item.getItemId());
+
+            // Navigate to the selected fragment
             int itemId = item.getItemId();
             if (itemId == R.id.home) {
                 replaceFragment(new viewGradeFragment());
             } else if (itemId == R.id.profile) {
                 replaceFragment(new profileFragment());
-            } else if (itemId == R.id.notifications) { // Assuming you added a new menu item for notifications
+            } else if (itemId == R.id.notifications) {
                 replaceFragment(new NotificationFragment());
+                // Animate badge when notifications tab is selected
+                BottomNavAnimationHelper.animateBadge(binding.bottomNavigationView, R.id.notifications);
             }
             return true;
         });
@@ -112,6 +154,9 @@ public class MainActivity extends AppCompatActivity implements NotificationFragm
                 // Update the notification badge and fragment
                 updateNotificationBadge();
 
+                // Animate the notification badge
+                BottomNavAnimationHelper.animateBadge(binding.bottomNavigationView, R.id.notifications);
+
                 // Check if NotificationFragment is visible, and if so, refresh it
                 Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
                 if (currentFragment instanceof NotificationFragment) {
@@ -123,6 +168,14 @@ public class MainActivity extends AppCompatActivity implements NotificationFragm
         // Use LocalBroadcastManager to register receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(notificationReceiver,
                 new IntentFilter("com.example.icstmgsfbstud.NOTIFICATION_RECEIVED"));
+    }
+
+    /**
+     * Apply ripple animation to the selected menu item
+     */
+    private void applyRippleToMenuItem(int itemId) {
+        // Use our helper method to apply ripple effect
+        BottomNavAnimationHelper.applyRippleToMenuItem(binding.bottomNavigationView, itemId);
     }
 
     private void updateFCMToken() {
@@ -212,7 +265,6 @@ public class MainActivity extends AppCompatActivity implements NotificationFragm
         }
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -228,17 +280,27 @@ public class MainActivity extends AppCompatActivity implements NotificationFragm
     }
 
     private void updateNotificationBadge(int notificationCount) {
-        BadgeDrawable badge = binding.bottomNavigationView.getOrCreateBadge(R.id.notifications); // Assuming the menu ID is `R.id.notifications`
-        badge.setVisible(notificationCount > 0);
-        badge.setNumber(notificationCount);
+        BadgeDrawable badge = binding.bottomNavigationView.getOrCreateBadge(R.id.notifications);
+        if (notificationCount > 0) {
+            badge.setVisible(true);
+            badge.setNumber(notificationCount);
+            // Animate the badge
+            BottomNavAnimationHelper.animateBadge(binding.bottomNavigationView, R.id.notifications);
+        } else {
+            badge.setVisible(false);
+        }
     }
 
     private void updateNotificationBadge() {
         // Retrieve the current notification count from SharedPreferences and update the badge
         int notificationCount = sharedPreferences.getInt("notification_count", 0);
         BadgeDrawable badge = binding.bottomNavigationView.getOrCreateBadge(R.id.notifications);
-        badge.setVisible(notificationCount > 0);
-        badge.setNumber(notificationCount);
+        if (notificationCount > 0) {
+            badge.setVisible(true);
+            badge.setNumber(notificationCount);
+        } else {
+            badge.setVisible(false);
+        }
     }
 
     // Unregister the BroadcastReceiver when activity is destroyed
@@ -421,8 +483,9 @@ public class MainActivity extends AppCompatActivity implements NotificationFragm
         // Save the notification in SharedPreferences to ensure it's displayed in the NotificationFragment
         saveNotificationInPreferences(body);
 
-        // Update notification count badge dynamically
+        // Update notification count badge dynamically with animation
         updateNotificationBadge();
+        BottomNavAnimationHelper.animateBadge(binding.bottomNavigationView, R.id.notifications);
 
         // Display a push notification in the system tray
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
@@ -461,10 +524,19 @@ public class MainActivity extends AppCompatActivity implements NotificationFragm
         editor.apply();
     }
 
-    // Replace the current fragment with a new fragment
+    // Replace the current fragment with a new fragment with animation
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        // Add custom animations for fragment transitions
+        fragmentTransaction.setCustomAnimations(
+                R.anim.slide_in_right, // enter animation
+                R.anim.slide_out_left, // exit animation
+                R.anim.slide_in_left,  // pop enter animation
+                R.anim.slide_out_right // pop exit animation
+        );
+
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
     }

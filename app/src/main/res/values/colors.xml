@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green">#007f01</color>
     <color name="grey">#d2d2d2</color>
+    <color name="nav_item_selected">#007f01</color>
+    <color name="nav_item_normal">#757575</color>
 </resources>
